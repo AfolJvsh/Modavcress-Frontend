@@ -13,7 +13,7 @@ export interface Task {
 
 
 // Base URL for your Laravel API
-const API_BASE_URL = 'http://task-manager.test/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // SERVER ACTIONS
 export async function getAllTasks(): Promise<Task[]> {
