@@ -1,7 +1,9 @@
 "use client";
 import { useState } from 'react';
 import { Loader2, PlusCircle } from 'lucide-react';
-import  { createTask, TaskStatus } from '@/lib/actions/task.actions';
+import  { createTask,  TaskStatus } from '@/lib/actions/task.actions';
+
+
 const TaskForm = () => {
     const [title, setTitle] = useState('');
   const [status, setStatus] = useState<TaskStatus>('todo');
@@ -21,13 +23,16 @@ const TaskForm = () => {
 
     try {
        await createTask(title, 'todo');
+       
       setTitle('');
       setStatus('todo');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to create task');
     } finally {
-      setIsLoading(false);
+        
+        setIsLoading(false);
     }
+    
   };
   return (
      <section>
@@ -59,6 +64,7 @@ const TaskForm = () => {
               </select>
             </label>
             <button 
+            
               type="submit"
               disabled={isLoading}
               className="flex w-full md:w-auto items-center justify-center whitespace-nowrap rounded-lg h-12 bg-primary text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-6 hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 dark:focus:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed"

@@ -14,21 +14,21 @@ const TaskItem = ({
   onToggleStatus: (task: Task) => void;
 }) => {
   const textStyle = task.status === 'done' 
-    ? "text-slate-500 dark:text-slate-400 text-base font-medium line-through truncate"
-    : "text-slate-800 dark:text-slate-200 text-base font-medium truncate";
+    ? "text-slate-500 dark:text-slate-400  text-base font-medium  line-through truncate"
+    : "text-slate-800 dark:text-slate-200 text-base  font-medium truncate";
 
   return (
-      <div className="flex items-center justify-between rounded-xl p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm transition-shadow hover:shadow-md">
-      <div className="flex items-center gap-4 flex-1 min-w-0">
+      <div className="flex flex-col gap-5 items-center justify-between rounded-xl p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm transition-shadow hover:shadow-md">
+      <div className="flex items-center justify-between gap-4 w-full">
         <StatusBadge status={task.status} />
-        <p className={textStyle}>{task.title}</p>
+          <TaskMenu task={task} onEdit={onEdit} onDelete={onDelete} />
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center w-full justify-between gap-4">
         <ToggleSwitch 
           checked={task.status === 'done'} 
           onChange={() => onToggleStatus(task)}
         />
-        <TaskMenu task={task} onEdit={onEdit} onDelete={onDelete} />
+        <p className={textStyle}>{task.title}</p>
       </div>
     </div>
   )

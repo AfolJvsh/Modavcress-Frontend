@@ -13,7 +13,7 @@ export interface Task {
 
 
 // Base URL for your Laravel API
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const API_BASE_URL = 'http://task-manager.test/api';
 
 // SERVER ACTIONS
 export async function getAllTasks(): Promise<Task[]> {
@@ -22,7 +22,7 @@ export async function getAllTasks(): Promise<Task[]> {
     headers: { 'Content-Type': 'application/json' },
     cache: "no-store",
   });
-
+revalidatePath('/')
   if (!res.ok) throw new Error('Failed to fetch tasks');
   return res.json();
 }
@@ -34,11 +34,12 @@ export async function createTask(title: string, status: TaskStatus): Promise<Tas
     body: JSON.stringify({ title, status }),
     cache: "no-store",
   });
-revalidatePath('/')
   if (!res.ok) throw new Error('Failed to create task');
+  revalidatePath('/');
+  getAllTasks();
   return res.json();
 }
-
+  
 export async function updateTask(id: number, title: string, status: TaskStatus): Promise<Task> {
   const res = await fetch(`${API_BASE_URL}/tasks/${id}`, {
     method: 'PUT',
